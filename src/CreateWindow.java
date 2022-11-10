@@ -30,10 +30,12 @@ public class CreateWindow {
 
 
     }
-
+    /*
     public static void main(String[] args) {
         CreateWindow nw = new CreateWindow();
 
         nw.create();
     }
+    */
+
 }

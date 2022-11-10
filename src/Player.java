@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class Player {
     Hashtable<String, Integer> dataTable = new Hashtable<>(
             Map.of(
@@ -8,12 +9,15 @@ public class Player {
             )
     );
 
+    String charArray[];
+
     public Player(int playerNumber, String cArray[]) {
+
+        this.charArray = cArray;
         dataTable.replace("PlayerNumber", playerNumber);
     }
 
-    public Hashtable<String, Integer> toReturn() {
-
+    public Hashtable<String, Integer> getData() {
         return dataTable;
     }
 }
