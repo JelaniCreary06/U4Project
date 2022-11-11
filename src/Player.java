@@ -11,9 +11,9 @@ public class Player {
 
     String charArray[];
 
-    public Player(int playerNumber, String cArray[]) {
+    public Player(int playerNumber, String charArray[]) {
 
-        this.charArray = cArray;
+        this.charArray = charArray;
         dataTable.replace("PlayerNumber", playerNumber);
     }
 
