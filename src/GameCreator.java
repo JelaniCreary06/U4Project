@@ -3,10 +3,10 @@ import java.awt.*;
 import java.util.*;
 
 public class GameCreator {
-    private CreateWindow window;
+    protected CreateWindow window;
     private ArrayList<String> charAssignment = new ArrayList<>(
             Arrays.asList(
-                    "wasd", "ijkl", "tfgh"
+                    "wasd", "ijkl", "tfgh", "8456"
                     /*
                     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
                     "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
@@ -14,11 +14,11 @@ public class GameCreator {
             )
     );
 
-    private ArrayList<Player> playerList = new ArrayList<Player>();
+    protected ArrayList<Player> playerList = new ArrayList<Player>();
 
     private final String COLOR_RED = "\u001B[31m";
-    private final int MAX_PLAYERS = charAssignment.size();
-    private int activePlayers;
+    protected final int MAX_PLAYERS = charAssignment.size();
+    protected int activePlayers;
 
     public GameCreator(int currentPlayers)  {
         if (currentPlayers > this.MAX_PLAYERS)
@@ -44,13 +44,6 @@ public class GameCreator {
         this.activePlayers = playerList.size();
     }
 
-    public GameCreator(String emptyString) {
-       //This is used so we can initalize GameCreator without starting a game.
-    }
-
-    public GameCreator() {
-
-    }
 
     public int maxPlayers() {
         return this.MAX_PLAYERS;

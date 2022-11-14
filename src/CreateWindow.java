@@ -3,17 +3,15 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-public class CreateWindow implements ActionListener {
-    private GameCreator activeGame = new GameCreator("");
-    private final int MAX_PLAYERS = activeGame.maxPlayers();
+public class CreateWindow  implements ActionListener {
+
+    private int MAX_PLAYERS = 4;
     private int players = 0;
+    private volatile boolean active = false;
 
     private JButton buttonArray[] = new JButton[MAX_PLAYERS];
-    public CreateWindow() {
-        startScreen();
-    }
+
 
     private JLabel topCenterLabel(String text, Color textColor, int size ) {
         JLabel jLabel = new JLabel(text);
@@ -39,7 +37,7 @@ public class CreateWindow implements ActionListener {
         return jButton;
     }
 
-    private void startScreen() {
+    public int startScreen() throws InterruptedException {
         JWindow jwindow = new JWindow();
         jwindow.setSize(400, 400);
         jwindow.setLocationRelativeTo(null);
@@ -63,21 +61,34 @@ public class CreateWindow implements ActionListener {
 
         jwindow.setVisible(true);
         sWindow.setVisible(true);
+
+        while (!active) {
+            Thread.sleep(1000);
+        }
+
+        jwindow.dispose();
+        sWindow.dispose();
+
+        return this.players;
+    }
+
+    public void gameScreen() {
+        JWindow jWindow = new JWindow();
+
+        jWindow.setSize(600,600);
+        jWindow.getContentPane().setBackground(Color.BLACK);
+        jWindow.setLocationRelativeTo(null);
+
+        jWindow.setVisible(true);
+        jWindow.setLocation(jWindow.getX()+200, jWindow.getY());
     }
 
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (JButton button : buttonArray) {
-            if (e.getSource() == button) {
-                players = Integer.parseInt(button.getText().charAt(0)+"");
-                notify();
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        CreateWindow nw = new CreateWindow();
+        JButton clicked = (JButton)(e.getSource());
+        this.players = Integer.parseInt(clicked.getText().charAt(0)+"");
+        this.active = true;
     }
 }
