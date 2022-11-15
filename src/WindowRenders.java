@@ -3,16 +3,19 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class WindowRenders implements ActionListener {
-    private final HolderClass holder = new HolderClass();
-    private final int MAX_PLAYERS = holder.MAX_PLAYERS;
+public class CreateWindow implements ActionListener {
+    private GameCreator activeGame = new GameCreator("");
+    private final int MAX_PLAYERS = activeGame.maxPlayers();
+    private int players = 0;
 
     private JButton buttonArray[] = new JButton[MAX_PLAYERS];
+    public CreateWindow() {
+        startScreen();
+    }
 
-    private volatile boolean value = false;
-    private int inputtedPlayers = 0;
-    private JLabel startTopCenterLabel(String text, Color textColor, int size ) {
+    private JLabel topCenterLabel(String text, Color textColor, int size ) {
         JLabel jLabel = new JLabel(text);
         jLabel.setForeground(textColor);
         jLabel.setSize(size, size);
@@ -24,7 +27,7 @@ public class WindowRenders implements ActionListener {
         return jLabel;
     }
 
-    private JButton newStartButton(String text, Color textColor) {
+    private JButton newButton(String text, Color textColor) {
         JButton jButton = new JButton();
         jButton.setText(text);
         jButton.setForeground(textColor);
@@ -36,13 +39,13 @@ public class WindowRenders implements ActionListener {
         return jButton;
     }
 
-    public int playerWindowAndValue() throws InterruptedException {
+    private void startScreen() {
         JWindow jwindow = new JWindow();
         jwindow.setSize(400, 400);
         jwindow.setLocationRelativeTo(null);
         jwindow.getContentPane().setBackground(SystemColor.BLACK);
 
-        jwindow.add(startTopCenterLabel("Start Screen", Color.BLUE, 100), BorderLayout.PAGE_START);
+        jwindow.add(topCenterLabel("Start Screen", Color.BLUE, 100), BorderLayout.PAGE_START);
 
         JWindow sWindow = new JWindow();
         sWindow.setSize(400, 330);
@@ -53,22 +56,13 @@ public class WindowRenders implements ActionListener {
         sWindow.setLayout(new GridLayout(0, 2));
 
         for (int i = 0; i < MAX_PLAYERS; i++) {
-            JButton toAdd = newStartButton((i+1)+" player(s)", Color.YELLOW);
+            JButton toAdd = newButton((i+1)+" player(s)", Color.YELLOW);
             sWindow.add(toAdd);
             buttonArray[i] = toAdd;
         }
 
         jwindow.setVisible(true);
         sWindow.setVisible(true);
-
-        while (!value) {
-            Thread.sleep(1000);
-        }
-
-        jwindow.dispose();
-        sWindow.dispose();
-
-        return this.inputtedPlayers;
     }
 
 
@@ -77,10 +71,13 @@ public class WindowRenders implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for (JButton button : buttonArray) {
             if (e.getSource() == button) {
-                this.inputtedPlayers = Integer.parseInt(button.getText().charAt(0)+"");
-                this.value = true;
-                break;
+                players = Integer.parseInt(button.getText().charAt(0)+"");
+                notify();
             }
         }
+    }
+
+    public static void main(String[] args) {
+        CreateWindow nw = new CreateWindow();
     }
 }
