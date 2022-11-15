@@ -1,7 +1,12 @@
 import java.util.Scanner;
 public class GameRunner {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-       CreateWindow window = new CreateWindow();
+       WindowRenders window = new WindowRenders();
+       final GameInitializer GAME = new GameInitializer();
+
+       GAME.gameInit(window.playerSelectionScreen(), window);
+       System.out.println(GAME.getCurrentPlayers());
+
+       GAME.gameStart();
     }
 }

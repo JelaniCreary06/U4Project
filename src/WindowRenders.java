@@ -3,17 +3,16 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-public class CreateWindow implements ActionListener {
-    private GameCreator activeGame = new GameCreator("");
-    private final int MAX_PLAYERS = activeGame.maxPlayers();
-    private int players = 0;
+public class WindowRenders extends GameInitializer implements ActionListener {
+    private final HolderClass holderClass = new HolderClass();
+    private int intPlayersReturn = 0;
+
+    private volatile boolean playersReturn = false;
 
     private JButton buttonArray[] = new JButton[MAX_PLAYERS];
-    public CreateWindow() {
-        startScreen();
-    }
 
     private JLabel topCenterLabel(String text, Color textColor, int size ) {
         JLabel jLabel = new JLabel(text);
@@ -39,7 +38,17 @@ public class CreateWindow implements ActionListener {
         return jButton;
     }
 
-    private void startScreen() {
+    public void display() {
+       JFrame jFrame = new JFrame();
+        jFrame.setSize(400, 400);
+        jFrame.setLocationRelativeTo(null);
+        jFrame.setLocation(jFrame.getX()-700, jFrame.getY());
+        jFrame.getContentPane().setBackground(SystemColor.BLACK);
+        jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        jFrame.setVisible(true);
+
+    }
+    public int playerSelectionScreen () {
         JWindow jwindow = new JWindow();
         jwindow.setSize(400, 400);
         jwindow.setLocationRelativeTo(null);
@@ -63,21 +72,41 @@ public class CreateWindow implements ActionListener {
 
         jwindow.setVisible(true);
         sWindow.setVisible(true);
+
+        while (!playersReturn) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        jwindow.dispose();
+        sWindow.dispose();
+
+        return this.intPlayersReturn;
     }
 
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (JButton button : buttonArray) {
-            if (e.getSource() == button) {
-                players = Integer.parseInt(button.getText().charAt(0)+"");
-                notify();
-            }
-        }
+        JButton clicked = (JButton) (e.getSource());
+        this.intPlayersReturn = Integer.parseInt(clicked.getText().charAt(0)+"");
+        this.playersReturn = true;
+    }
+
+    public void actionPerformed(WindowEvent w) {
+        JFrame actionWindow = (JFrame) (w.getSource());
+
     }
 
     public static void main(String[] args) {
-        CreateWindow nw = new CreateWindow();
+
+        WindowRenders nw = new WindowRenders();
+        nw.display();
+
     }
+
+
 }

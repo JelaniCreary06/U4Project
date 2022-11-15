@@ -2,6 +2,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GameRendering extends GameInitializer implements KeyListener {
+
+
     @Override
     public void keyTyped(KeyEvent e) {
 
