@@ -1,12 +1,11 @@
-import javax.naming.SizeLimitExceededException;
-import java.awt.*;
 import java.util.*;
 
-public class GameCreator {
-    private CreateWindow window;
+public class GameInitializer {
+    private WindowRenders window;
+
     private ArrayList<String> charAssignment = new ArrayList<>(
             Arrays.asList(
-                    "wasd", "ijkl", "tfgh"
+                    "wasd", "ijkl", "tfgh", "8456"
                     /*
                     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
                     "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
@@ -16,15 +15,16 @@ public class GameCreator {
 
     private ArrayList<Player> playerList = new ArrayList<Player>();
 
-    private final String COLOR_RED = "\u001B[31m";
-    private final int MAX_PLAYERS = charAssignment.size();
+    protected final String COLOR_RED = "\u001B[31m";
+    protected final int MAX_PLAYERS = charAssignment.size();
     private int activePlayers;
 
-    public GameCreator(int currentPlayers)  {
+    public void gameInit(int currentPlayers, WindowRenders window)  {
         if (currentPlayers > this.MAX_PLAYERS)
             throw new ArithmeticException("Too many players!\nThe max is: " + this.MAX_PLAYERS
                     + ", " + currentPlayers + " players were inputted!\n");
 
+        this.window = window;
         for (int i = 0; i < currentPlayers; i++) {
             int toGet = (int) Math.random() * charAssignment.size();
 
@@ -44,11 +44,13 @@ public class GameCreator {
         this.activePlayers = playerList.size();
     }
 
-    public GameCreator(String emptyString) {
-       //This is used so we can initalize GameCreator without starting a game.
+    public void gameStart() {
+        if (this.activePlayers <= 0)
+            throw new ArrayIndexOutOfBoundsException("No players!\n"
+                    +"Initialize the player list with the gameInit method!\n\n");
     }
 
-    public GameCreator() {
+    public void gameClear() {
 
     }
 
@@ -60,10 +62,13 @@ public class GameCreator {
         return playerList;
     }
 
+    public int playerCount() {
+        return this.activePlayers;
+    }
+
     public static void main(String[] args) {
 
-        GameCreator gc = new GameCreator(5);
-        System.out.print(gc.getCurrentPlayers());
+
     }
 
 
