@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class WindowRenders extends GameInitializer implements ActionListener {
-    private final HolderClass holderClass = new HolderClass();
-    private int intPlayersReturn = 0;
+public class WindowRenders extends GameSetup implements ActionListener, WindowListener {
+    protected int intPlayersReturn = 0;
 
-    private volatile boolean playersReturn = false;
+    protected volatile boolean playersReturn = false;
 
     private JButton buttonArray[] = new JButton[MAX_PLAYERS];
+
 
     private JLabel topCenterLabel(String text, Color textColor, int size ) {
         JLabel jLabel = new JLabel(text);
@@ -38,14 +38,17 @@ public class WindowRenders extends GameInitializer implements ActionListener {
         return jButton;
     }
 
-    public void display() {
+    public void display(Player player) {
        JFrame jFrame = new JFrame();
-        jFrame.setSize(400, 400);
-        jFrame.setLocationRelativeTo(null);
-        jFrame.setLocation(jFrame.getX()-700, jFrame.getY());
-        jFrame.getContentPane().setBackground(SystemColor.BLACK);
-        jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        jFrame.setVisible(true);
+       jFrame.setTitle("");
+
+       jFrame.setSize(500, 600);
+       jFrame.setLocationRelativeTo(null);
+       jFrame.setLocation(jFrame.getX()-700, jFrame.getY());
+       jFrame.getContentPane().setBackground(SystemColor.BLACK);
+       jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       jFrame.addWindowListener(this);
+       jFrame.setVisible(true);
 
     }
     public int playerSelectionScreen () {
@@ -84,7 +87,7 @@ public class WindowRenders extends GameInitializer implements ActionListener {
         jwindow.dispose();
         sWindow.dispose();
 
-        return this.intPlayersReturn;
+        return intPlayersReturn;
     }
 
 
@@ -96,17 +99,39 @@ public class WindowRenders extends GameInitializer implements ActionListener {
         this.playersReturn = true;
     }
 
-    public void actionPerformed(WindowEvent w) {
-        JFrame actionWindow = (JFrame) (w.getSource());
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println(e.getSource());
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println(e.getSource());
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
 
     }
 
-    public static void main(String[] args) {
-
-        WindowRenders nw = new WindowRenders();
-        nw.display();
+    @Override
+    public void windowIconified(WindowEvent e) {
 
     }
 
+    @Override
+    public void windowDeiconified(WindowEvent e) {
 
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

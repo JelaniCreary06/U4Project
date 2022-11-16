@@ -1,7 +1,7 @@
 import java.util.*;
 
-public class GameInitializer {
-    private WindowRenders window;
+public class GameSetup {
+    private WindowRenders winRender;
     private ArrayList<String> charAssignment = new ArrayList<>(
             Arrays.asList(
                     "wasd", "ijkl", "tfgh"
@@ -12,22 +12,34 @@ public class GameInitializer {
             )
     );
 
+    private ArrayList<Integer> locationList1 = new ArrayList<>(
+            Arrays.asList(
+                    700, 0
+            )
+    );
     private ArrayList<Player> playerList = new ArrayList<Player>();
 
     protected final String COLOR_RED = "\u001B[31m";
     protected final int MAX_PLAYERS = charAssignment.size();
     protected int activePlayers;
 
-    public GameInitializer() {
+    protected boolean activeGame = false;
+
+    public GameSetup(WindowRenders winRender) {
+        this.winRender = winRender;
+    }
+
+    public GameSetup() {
 
     }
 
-    public void gameInit(int currentPlayers, WindowRenders window)  {
+    public void init()  {
+        int currentPlayers = winRender.playerSelectionScreen();
+
         if (currentPlayers > this.MAX_PLAYERS)
             throw new ArithmeticException("Too many players!\nThe max is: " + this.MAX_PLAYERS
                     + ", " + currentPlayers + " players were inputted!\n");
 
-        this.window = window;
         for (int i = 0; i < currentPlayers; i++) {
             int toGet = (int) Math.random() * charAssignment.size();
 
@@ -47,8 +59,10 @@ public class GameInitializer {
         this.activePlayers = playerList.size();
     }
 
-    public void gameStart() {
-        window.display();
+    public void start() {
+        for (Player player : playerList) {
+            winRender.display(player);
+        }
     }
 
     public int maxPlayers() {

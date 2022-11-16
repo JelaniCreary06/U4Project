@@ -1,12 +1,21 @@
-import java.util.Scanner;
 public class GameRunner {
     public static void main(String[] args) {
-       WindowRenders window = new WindowRenders();
-       final GameInitializer GAME = new GameInitializer();
+       final WindowRenders windowRenders = new WindowRenders();
 
-       GAME.gameInit(window.playerSelectionScreen(), window);
+       final GameSetup GAME = new GameSetup(windowRenders);
+
+       /*
+       boolean gameFinished = false;
+
+       while(!gameFinished) {
+
+       }
+       */
+        GAME.init();
+        GAME.start();
+
        System.out.println(GAME.getCurrentPlayers());
 
-       GAME.gameStart();
+
     }
 }

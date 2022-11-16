@@ -1,7 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GameRendering extends GameInitializer implements KeyListener {
+public class GameRendering extends GameSetup implements KeyListener {
 
 
     @Override
