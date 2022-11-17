@@ -2,11 +2,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 
-public class GameSetup  {
+public class GameSetup  implements KeyListener{
     private WindowRenders winRender;
     private ArrayList<String> charAssignment = new ArrayList<>(
             Arrays.asList(
-                    "wasd", "ijkl", "tfgh", "efds"
+                    "wasd", "ijkl"
                     /*
                     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
                     "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
@@ -82,10 +82,13 @@ public class GameSetup  {
                 break;
         }
 
+        int d = 1;
+
         for (Player player : playerList) {
 
             winRender.display(player, location);
             location -= toMinus;
+            d++;
         }
 
         this.activeGame = true;
@@ -97,5 +100,20 @@ public class GameSetup  {
      */
     public ArrayList<Player> getCurrentPlayers() {
         return playerList;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

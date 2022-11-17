@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class WindowRenders extends GameSetup implements ActionListener, WindowListener, KeyListener {
     protected int intPlayersReturn = 0;
@@ -9,7 +11,14 @@ public class WindowRenders extends GameSetup implements ActionListener, WindowLi
     protected volatile boolean playersReturn = false;
 
     private JButton buttonArray[] = new JButton[MAX_PLAYERS];
-    private JFrame frameArray[] = new JFrame[MAX_PLAYERS];
+    private ArrayList<JLabel> frameArray = new ArrayList<JLabel>();
+
+    ArrayList<String> charArray = new ArrayList<>(
+            Arrays.asList(
+                    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+                    "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+            )
+    );
 
 
     /**
@@ -60,7 +69,6 @@ public class WindowRenders extends GameSetup implements ActionListener, WindowLi
        jFrame.addWindowListener(this);
        jFrame.addKeyListener(this);
 
-       jFrame.setFocusable(true);
        jFrame.setVisible(true);
 
         JLabel jLabel = new JLabel();
@@ -71,25 +79,8 @@ public class WindowRenders extends GameSetup implements ActionListener, WindowLi
         jLabel.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel.setForeground(Color.ORANGE);
         jFrame.add(jLabel);
-       /*
-       String charArray[] = player.charArray;
 
-        for (int i = 0; i < 10; i++) {
-
-            int c = 0;
-            while (c < 5) {
-                c++;
-                try {
-                    Thread.sleep(1000);
-                }  catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            jLabel.setVisible(false);
-        }
-
-        */
+        frameArray.add(jLabel);
 
     }
 
@@ -136,18 +127,25 @@ public class WindowRenders extends GameSetup implements ActionListener, WindowLi
         return intPlayersReturn;
     }
 
+    public void change(String c) {
+        for (JLabel frame : frameArray) {
+            if (frame.getText().equals(c)) {
+                System.out.println(c);
+                frame.setText(charArray.get((int) (Math.random() * charArray.size())));
+            }
+        }
+    }
 
     public void keyTyped(KeyEvent e) {
-        System.out.println("pfwdfdfd");
+
+        System.out.println(e.getKeyChar());
+        change(e.getKeyChar()+"");
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        for (JFrame frame : frameArray) {
-            if (frame.getTitle() == e.getKeyChar()+"") {
 
-            }
-        }
     }
 
     @Override
