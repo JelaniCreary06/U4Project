@@ -5,12 +5,21 @@ public class Player {
 
     String charArray[];
 
+    /**
+     * Initialize a new Player Object.
+     * @param playerNumber The players position.
+     * @param charArray The keys the player has to press.
+     */
     public Player(int playerNumber, String charArray[]) {
 
         this.playerNumber = playerNumber;
         this.charArray = charArray;
     }
 
+    /**
+     *
+     * @return Returns the player data as a Hashtable.
+     */
     public Hashtable<String, Integer> playerData() {
         return new Hashtable<>(
                 Map.of(
@@ -19,6 +28,13 @@ public class Player {
                         "Keys Pressed", this.keysPressed
                 )
         );
+    }
+
+    /**
+     * @return Returns the player position [player number].
+     */
+    public int playerPosition() {
+        return this.playerNumber;
     }
 
     /*

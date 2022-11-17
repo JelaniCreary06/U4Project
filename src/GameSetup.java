@@ -1,10 +1,12 @@
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.*;
 
-public class GameSetup {
+public class GameSetup  {
     private WindowRenders winRender;
     private ArrayList<String> charAssignment = new ArrayList<>(
             Arrays.asList(
-                    "wasd", "ijkl", "tfgh"
+                    "wasd", "ijkl", "tfgh", "efds"
                     /*
                     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
                     "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
@@ -12,11 +14,6 @@ public class GameSetup {
             )
     );
 
-    private ArrayList<Integer> locationList1 = new ArrayList<>(
-            Arrays.asList(
-                    700, 0
-            )
-    );
     private ArrayList<Player> playerList = new ArrayList<Player>();
 
     protected final String COLOR_RED = "\u001B[31m";
@@ -25,14 +22,23 @@ public class GameSetup {
 
     protected boolean activeGame = false;
 
+    /**
+     * Used to initialzie a GameSetup Class.
+     * @param winRender The window object we'll use.
+     */
     public GameSetup(WindowRenders winRender) {
         this.winRender = winRender;
     }
 
+    /**
+     * Not really used for much, this is used for class extensions.
+     */
     public GameSetup() {
 
     }
 
+    /** Initializes a game by displaying the Player Selection screen.
+     */
     public void init()  {
         int currentPlayers = winRender.playerSelectionScreen();
 
@@ -59,19 +65,37 @@ public class GameSetup {
         this.activePlayers = playerList.size();
     }
 
+    /**
+     * Starts a game using WinRender methods and KeyListeners.
+     */
     public void start() {
-        for (Player player : playerList) {
-            winRender.display(player);
+        int location = 0, toMinus = 400;
+
+        switch (this.activePlayers) {
+            case 1: location = 0;
+                break;
+            case 2: location = 200;
+                break;
+            case 3: location = 400;
+                break;
+            default: location = 530; toMinus = 350;
+                break;
         }
+
+        for (Player player : playerList) {
+
+            winRender.display(player, location);
+            location -= toMinus;
+        }
+
+        this.activeGame = true;
     }
 
-    public int maxPlayers() {
-        return this.MAX_PLAYERS;
-    }
-
+    /**
+     *
+     * @return Returns each player Object.
+     */
     public ArrayList<Player> getCurrentPlayers() {
         return playerList;
     }
-
-
 }

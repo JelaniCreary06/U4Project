@@ -1,19 +1,20 @@
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 
-public class WindowRenders extends GameSetup implements ActionListener, WindowListener {
+public class WindowRenders extends GameSetup implements ActionListener, WindowListener, KeyListener {
     protected int intPlayersReturn = 0;
 
     protected volatile boolean playersReturn = false;
 
     private JButton buttonArray[] = new JButton[MAX_PLAYERS];
+    private JFrame frameArray[] = new JFrame[MAX_PLAYERS];
 
 
+    /**
+     * Creates the top center label for the selection screen.
+     */
     private JLabel topCenterLabel(String text, Color textColor, int size ) {
         JLabel jLabel = new JLabel(text);
         jLabel.setForeground(textColor);
@@ -26,6 +27,9 @@ public class WindowRenders extends GameSetup implements ActionListener, WindowLi
         return jLabel;
     }
 
+    /**
+     * Creates a new Button for the selection screen.
+     */
     private JButton newButton(String text, Color textColor) {
         JButton jButton = new JButton();
         jButton.setText(text);
@@ -38,19 +42,61 @@ public class WindowRenders extends GameSetup implements ActionListener, WindowLi
         return jButton;
     }
 
-    public void display(Player player) {
+    /**
+     *
+     * @param player
+     * Creates a jFrame on the screen for a player.
+     * Frames are created per player, to play the game.
+     */
+    public void display(Player player, int location) {
        JFrame jFrame = new JFrame();
-       jFrame.setTitle("");
+       jFrame.setTitle("Player " + player.playerPosition());
 
-       jFrame.setSize(500, 600);
+       jFrame.setSize(300, 600);
        jFrame.setLocationRelativeTo(null);
-       jFrame.setLocation(jFrame.getX()-700, jFrame.getY());
+       jFrame.setLocation(jFrame.getX()+location, jFrame.getY());
        jFrame.getContentPane().setBackground(SystemColor.BLACK);
        jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
        jFrame.addWindowListener(this);
+       jFrame.addKeyListener(this);
+
+       jFrame.setFocusable(true);
        jFrame.setVisible(true);
 
+        JLabel jLabel = new JLabel();
+
+        jLabel.setSize(100, 100);
+        jLabel.setText("w");
+        jLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 40));
+        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel.setForeground(Color.ORANGE);
+        jFrame.add(jLabel);
+       /*
+       String charArray[] = player.charArray;
+
+        for (int i = 0; i < 10; i++) {
+
+            int c = 0;
+            while (c < 5) {
+                c++;
+                try {
+                    Thread.sleep(1000);
+                }  catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            jLabel.setVisible(false);
+        }
+
+        */
+
     }
+
+    /**
+     * Uses the newButton and topCenterLabel methods.
+     * @return Returns the selected amount of players.
+     */
     public int playerSelectionScreen () {
         JWindow jwindow = new JWindow();
         jwindow.setSize(400, 400);
@@ -91,6 +137,23 @@ public class WindowRenders extends GameSetup implements ActionListener, WindowLi
     }
 
 
+    public void keyTyped(KeyEvent e) {
+        System.out.println("pfwdfdfd");
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        for (JFrame frame : frameArray) {
+            if (frame.getTitle() == e.getKeyChar()+"") {
+
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -107,7 +170,7 @@ public class WindowRenders extends GameSetup implements ActionListener, WindowLi
 
     @Override
     public void windowClosing(WindowEvent e) {
-        System.out.println(e.getSource());
+
     }
 
     @Override
