@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Player {
-    private int playerNumber, playerPoints = 0, keysPressed = 0;
+    int playerNumber, playerPoints = 0, keysPressed = 0;
 
     String charArray[];
 

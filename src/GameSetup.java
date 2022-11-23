@@ -2,8 +2,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
 
-public class GameSetup  implements KeyListener{
-    private WindowRenders winRender;
+public class GameSetup {
+    private GameRendering gameRendering;
     private ArrayList<String> charAssignment = new ArrayList<>(
             Arrays.asList(
                     "wasd", "ijkl"
@@ -14,7 +14,7 @@ public class GameSetup  implements KeyListener{
             )
     );
 
-    private ArrayList<Player> playerList = new ArrayList<Player>();
+    protected ArrayList<Player> playerList = new ArrayList<Player>();
 
     protected final String COLOR_RED = "\u001B[31m";
     protected final int MAX_PLAYERS = charAssignment.size();
@@ -24,10 +24,10 @@ public class GameSetup  implements KeyListener{
 
     /**
      * Used to initialzie a GameSetup Class.
-     * @param winRender The window object we'll use.
+     * @param gameRendering The window object we'll use.
      */
-    public GameSetup(WindowRenders winRender) {
-        this.winRender = winRender;
+    public GameSetup(GameRendering gameRendering) {
+        this.gameRendering = gameRendering;
     }
 
     /**
@@ -40,13 +40,14 @@ public class GameSetup  implements KeyListener{
     /** Initializes a game by displaying the Player Selection screen.
      */
     public void init()  {
-        int currentPlayers = winRender.playerSelectionScreen();
+        gameRendering.playerScreenExample();
+        int currentPlayers = gameRendering.playerSelectionScreen();
 
         if (currentPlayers > this.MAX_PLAYERS)
             throw new ArithmeticException("Too many players!\nThe max is: " + this.MAX_PLAYERS
                     + ", " + currentPlayers + " players were inputted!\n");
 
-        for (int i = 0; i < currentPlayers; i++) {
+        for (int i = 1; i <= currentPlayers; i++) {
             int toGet = (int) Math.random() * charAssignment.size();
 
             String toParse = charAssignment.get(toGet);
@@ -78,17 +79,14 @@ public class GameSetup  implements KeyListener{
                 break;
             case 3: location = 400;
                 break;
-            default: location = 530; toMinus = 350;
+            case 4: location = 530; toMinus = 350;
                 break;
         }
 
-        int d = 1;
-
         for (Player player : playerList) {
 
-            winRender.display(player, location);
+            gameRendering.display(player, location);
             location -= toMinus;
-            d++;
         }
 
         this.activeGame = true;
@@ -102,18 +100,4 @@ public class GameSetup  implements KeyListener{
         return playerList;
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
 }
