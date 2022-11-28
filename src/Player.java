@@ -37,7 +37,7 @@ public class Player {
         return this.playerNumber;
     }
 
-    /*
+
    public String toString() {
         String toReturn = "Player " + this.playerNumber +
                 "\nPoints: " + this.playerPoints +
@@ -46,5 +46,4 @@ public class Player {
         return toReturn;
    }
 
-     */
 }

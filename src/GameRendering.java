@@ -225,6 +225,7 @@ public class GameRendering extends GameSetup implements ActionListener, WindowLi
         }
     }
     public void keyTyped(KeyEvent e) {
+        this.score++;
         for (JLabel l : frameArray) {
             l.setText(charArray.get((int) (Math.random() * charArray.size())));
         }

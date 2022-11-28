@@ -6,7 +6,7 @@ public class GameSetup {
     private GameRendering gameRendering;
     private ArrayList<String> charAssignment = new ArrayList<>(
             Arrays.asList(
-                    "wasd", "ijkl"
+                    "wasd"
                     /*
                     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
                     "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
@@ -18,7 +18,7 @@ public class GameSetup {
 
     protected final String COLOR_RED = "\u001B[31m";
     protected final int MAX_PLAYERS = charAssignment.size();
-    protected int activePlayers;
+    protected int activePlayers, score = 0;
 
     protected boolean activeGame = false;
 
@@ -100,4 +100,5 @@ public class GameSetup {
         return playerList;
     }
 
+    public int score() {return this.score;}
 }

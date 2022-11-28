@@ -14,9 +14,8 @@ public class GameRunner {
        }
        */
 
-        System.out.print("This is a reaction test!\nPress the corresponding letter that will appear on your screen."
-        + "\n Scores and an interactive tutorial, and a timer will be added next, just have fun for now!"
-        + "\n The game will start in 5 seconds.");
+        System.out.print("The game kind of broke, and dosent work as intended\nso this is a spam test"
+                + " get as many points as possible!\nAim to beat your score!\nYou have 3 minutes.");
 
 
             GAME.init();
@@ -24,6 +23,13 @@ public class GameRunner {
 
             System.out.println(GAME.getCurrentPlayers());
 
+            try {
+                Thread.sleep(180000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } finally {
+                System.out.println("\n\nScore: " + gameRendering.score());
+            }
 
 
     }
